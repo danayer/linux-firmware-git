@@ -575,18 +575,16 @@ popd
 	
 # Create file list but exclude firmwares that we place in subpackages
 	
-FILEDIR=`pwd`
 	
 pushd %{buildroot}/%{_firmwarepath}
 	
-find . \! -type d > $FILEDIR/linux-firmware.files
-	
-find . -type d | sed -e '/^.$/d' > $FILEDIR/linux-firmware.dirs
+find . \! -type d > %{_builddir}/linux-firmware-main/linux-firmware.files
+find . -type d | sed -e '/^.$/d' > %{_builddir}/linux-firmware-main/linux-firmware.dirs
 	
 popd
 
-cd $FILEDIR
-	
+cd %{_builddir}/linux-firmware-main
+
 sed -i -e 's:^./::' linux-firmware.{files,dirs}
 	
 sed \
