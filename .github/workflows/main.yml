@@ -8,6 +8,8 @@ on:
 jobs:
   check-firmware-updates:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,7 +21,7 @@ jobs:
       - name: Get latest commit from linux-firmware
         id: firmware
         run: |
-          LATEST_COMMIT=$(curl -s https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/refs/heads/main | grep -o '[a-f0-9]\{40\}' | head -n1)
+          LATEST_COMMIT=$(curl -s https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/ | grep -o 'commit [a-f0-9]\{40\}' | head -n1 | cut -d' ' -f2)
           LATEST_SHORT_COMMIT=${LATEST_COMMIT:0:7}
           echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
           echo "LATEST_SHORT_COMMIT=$LATEST_SHORT_COMMIT" >> $GITHUB_ENV
@@ -50,16 +52,11 @@ jobs:
           sed -i "s/%global shortcommit .*/%global shortcommit ${{ env.LATEST_SHORT_COMMIT }}/" linux-firmware.spec
           sed -i "s/Version:.*/Version:    ${{ env.NEW_VERSION }}/" linux-firmware.spec
 
-      - name: Create Pull Request
+      - name: Commit changes
         if: env.UPDATE_NEEDED == 'true'
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Update linux-firmware to ${{ env.LATEST_SHORT_COMMIT }}"
-          title: "Update linux-firmware to ${{ env.LATEST_SHORT_COMMIT }}"
-          body: |
-            Updated linux-firmware:
-            - New commit: ${{ env.LATEST_COMMIT }}
-            - New version: ${{ env.NEW_VERSION }}
-          branch: update-firmware
-          delete-branch: true
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          git add linux-firmware.spec
+          git commit -m "Update linux-firmware to ${{ env.LATEST_SHORT_COMMIT }}"
+          git push
