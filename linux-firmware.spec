@@ -27,7 +27,7 @@ BuildArch:	noarch
 	
  
 	
-Source0:	git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+Source0:	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-main.tar.gz
 	
  
 	
@@ -491,8 +491,7 @@ Terratec H5 DRX-K, ITEtech IT9135 Ax and Bx, and av7110.
 	
 %prep
 	
-%setup -q -n linux-firmware-%{version}
-git clone git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git .
+%autosetup -n linux-firmware-main
 	
  
 	
