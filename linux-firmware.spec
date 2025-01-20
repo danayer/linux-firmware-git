@@ -491,7 +491,7 @@ Terratec H5 DRX-K, ITEtech IT9135 Ax and Bx, and av7110.
 	
 %prep
 	
-%autosetup -S git -p1
+%autosetup -S git -p1 -n linux-firmware-main
 	
  
 	
