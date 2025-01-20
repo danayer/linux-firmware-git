@@ -575,11 +575,29 @@ popd
 	
 # Create file list but exclude firmwares that we place in subpackages
 	
-	
 pushd %{buildroot}/%{_firmwarepath}
 	
-find . \! -type d > %{_builddir}/linux-firmware-main/linux-firmware.files
-find . -type d | sed -e '/^.$/d' > %{_builddir}/linux-firmware-main/linux-firmware.dirs
+# Создаем временные файлы для списков
+	
+TMP_FILES=`mktemp`
+	
+TMP_DIRS=`mktemp`
+	
+# Генерируем списки файлов и директорий
+	
+find . \! -type d > $TMP_FILES
+	
+find . -type d | sed -e '/^.$/d' > $TMP_DIRS
+	
+# Копируем в целевые файлы
+	
+cp $TMP_FILES %{_builddir}/linux-firmware-main/linux-firmware.files
+	
+cp $TMP_DIRS %{_builddir}/linux-firmware-main/linux-firmware.dirs
+	
+# Удаляем временные файлы
+	
+rm -f $TMP_FILES $TMP_DIRS
 	
 popd
 
