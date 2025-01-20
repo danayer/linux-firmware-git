@@ -589,128 +589,20 @@ popd
 	
 cd %{_builddir}/linux-firmware-main
 	
-# Фильтруем файлы с помощью одной команды sed
+# Фильтруем файлы одной командой
+sed -i -e '/^a300_p/d;/^amdgpu/d;/^amdnpu/d;/^amd/d;/^amdtee/d;/^amd-ucode/d;\
+/^ar3k/d;/^ath6k/d;/^ath9k_htc/d;/^ath10k/d;/^ath11k/d;/^ath12k/d;\
+/^as102_data/d;/^av7110/d;/^brcm/d;/^cirrus/d;/^cmmb/d;/^cypress/d;\
+/^dvb/d;/^i915/d;/^intel\/avs/d;/^intel\/catpt/d;/^intel\/dsp_fw/d;\
+/^intel\/fw_sst/d;/^intel\/ipu/d;/^intel\/ipu3/d;/^intel\/irci_irci/d;\
+/^intel\/vsc/d;/^isdbt/d;/^iwlwifi/d;/^nvidia\/a/d;/^nvidia\/g/d;\
+/^nvidia\/tu/d;/^lgs8g75/d;/^libertas/d;/^liquidio/d;/^mellanox/d;\
+/^mediatek\/mt76/d;/^mediatek\/mt79/d;/^mediatek\/BT/d;/^mediatek\/WIFI/d;\
+/^mrvl\/prestera/d;/^mrvl\/sd8787/d;/^mt76/d;/^netronome/d;/^nxp/d;\
+/^qca/d;/^qcom/d;/^qed/d;/^radeon/d;/^rtl_bt/d;/^rtlwifi/d;/^rtw88/d;\
+/^rtw89/d;/^sms1xxx/d;/^tdmb/d;/^ti-connectivity/d;/^v4l-cx2/d' linux-firmware.files
 	
-sed -i \
-	
-	-e '/^a300_p/d' \
-	
-	-e '/^amdgpu/d' \
-	
-	-e '/^amdnpu/d' \
-	
-	-i -e '/^amd/d' \
-	
-	-i -e '/^amdtee/d' \
-	
-	-i -e '/^amd-ucode/d' \
-	
-	-i -e '/^ar3k/d' \
-	
-	-i -e '/^ath6k/d' \
-	
-	-i -e '/^ath9k_htc/d' \
-	
-	-i -e '/^ath10k/d' \
-	
-	-i -e '/^ath11k/d' \
-	
-	-i -e '/^ath12k/d' \
-	
-	-i -e '/^as102_data/d' \
-	
-	-i -e '/^av7110/d' \
-	
-	-i -e '/^brcm/d' \
-	
-	-i -e '/^cirrus/d' \
-	
-	-i -e '/^cmmb/d' \
-	
-	-i -e '/^cypress/d' \
-	
-	-i -e '/^dvb/d' \
-	
-	-i -e '/^i915/d' \
-	
-	-i -e '/^intel\/avs/d' \
-	
-	-i -e '/^intel\/catpt/d' \
-	
-	-i -e '/^intel\/dsp_fw/d' \
-	
-	-i -e '/^intel\/fw_sst/d' \
-	
-	-i -e '/^intel\/ipu/d' \
-	
-	-i -e '/^intel\/ipu3/d' \
-	
-	-i -e '/^intel\/irci_irci/d' \
-	
-	-i -e '/^intel\/vsc/d' \
-	
-	-i -e '/^isdbt/d' \
-	
-	-i -e '/^iwlwifi/d' \
-	
-	-i -e '/^nvidia\/a/d' \
-	
-	-i -e '/^nvidia\/g/d' \
-	
-	-i -e '/^nvidia\/tu/d' \
-	
-	-i -e '/^lgs8g75/d' \
-	
-	-i -e '/^libertas/d' \
-	
-	-i -e '/^liquidio/d' \
-	
-	-i -e '/^mellanox/d' \
-	
-	-i -e '/^mediatek\/mt76/d' \
-	
-	-i -e '/^mediatek\/mt79/d' \
-	
-	-i -e '/^mediatek\/BT/d' \
-	
-	-i -e '/^mediatek\/WIFI/d' \
-	
-	-i -e '/^mrvl\/prestera/d' \
-	
-	-i -e '/^mrvl\/sd8787/d' \
-	
-	-i -e '/^mt76/d' \
-	
-	-i -e '/^netronome/d' \
-	
-	-i -e '/^nxp/d' \
-	
-	-i -e '/^qca/d' \
-	
-	-i -e '/^qcom/d' \
-	
-	-i -e '/^qed/d' \
-	
-	-i -e '/^radeon/d' \
-	
-	-i -e '/^rtl_bt/d' \
-	
-	-i -e '/^rtlwifi/d' \
-	
-	-i -e '/^rtw88/d' \
-	
-	-i -e '/^rtw89/d' \
-	
-	-i -e '/^sms1xxx/d' \
-	
-	-i -e '/^tdmb/d' \
-	
-	-i -e '/^ti-connectivity/d' \
-	
-	-i -e '/^v4l-cx2/d' \
-	
-	linux-firmware.files
-	
+# Добавляем пути и форматирование
 sed -i -e 's!^!/usr/lib/firmware/!' linux-firmware.{files,dirs}
 	
 sed -i -e 's/^/"/;s/$/"/' linux-firmware.files
