@@ -19,9 +19,7 @@ jobs:
       - name: Get latest commit from linux-firmware
         id: firmware
         run: |
-          git clone --bare https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
-          cd linux-firmware.git
-          LATEST_COMMIT=$(git rev-parse HEAD)
+          LATEST_COMMIT=$(curl -s https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/refs/heads/main | grep -o '[a-f0-9]\{40\}' | head -n1)
           LATEST_SHORT_COMMIT=${LATEST_COMMIT:0:7}
           echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
           echo "LATEST_SHORT_COMMIT=$LATEST_SHORT_COMMIT" >> $GITHUB_ENV
