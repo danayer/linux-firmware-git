@@ -491,7 +491,7 @@ Terratec H5 DRX-K, ITEtech IT9135 Ax and Bx, and av7110.
 	
 %prep
 	
-%autosetup -n linux-firmware-main
+%autosetup -S git -p1
 	
  
 	
@@ -589,121 +589,121 @@ sed -i -e 's:^./::' linux-firmware.{files,dirs}
 	
 sed \
 	
-	-i -e 's:^a300_p/d' \
+	-i -e '/^a300_p/d' \
 	
-	-i -e 's:^amdgpu/d' \
+	-i -e '/^amdgpu/d' \
 	
-	-i -e 's:^amdnpu/d' \
+	-i -e '/^amdnpu/d' \
 	
-	-i -e 's:^amd/d' \
+	-i -e '/^amd/d' \
 	
-	-i -e 's:^amdtee/d' \
+	-i -e '/^amdtee/d' \
 	
-	-i -e 's:^amd-ucode/d' \
+	-i -e '/^amd-ucode/d' \
 	
-	-i -e 's:^ar3k/d' \
+	-i -e '/^ar3k/d' \
 	
-	-i -e 's:^ath6k/d' \
+	-i -e '/^ath6k/d' \
 	
-	-i -e 's:^ath9k_htc/d' \
+	-i -e '/^ath9k_htc/d' \
 	
-	-i -e 's:^ath10k/d' \
+	-i -e '/^ath10k/d' \
 	
-	-i -e 's:^ath11k/d' \
+	-i -e '/^ath11k/d' \
 	
-	-i -e 's:^ath12k/d' \
+	-i -e '/^ath12k/d' \
 	
-	-i -e 's:^as102_data/d' \
+	-i -e '/^as102_data/d' \
 	
-	-i -e 's:^av7110/d' \
+	-i -e '/^av7110/d' \
 	
-	-i -e 's:^brcm/d' \
+	-i -e '/^brcm/d' \
 	
-	-i -e 's:^cirrus/d' \
+	-i -e '/^cirrus/d' \
 	
-	-i -e 's:^cmmb/d' \
+	-i -e '/^cmmb/d' \
 	
-	-i -e 's:^cypress/d' \
+	-i -e '/^cypress/d' \
 	
-	-i -e 's:^dvb/d' \
+	-i -e '/^dvb/d' \
 	
-	-i -e 's:^i915/d' \
+	-i -e '/^i915/d' \
 	
-	-i -e 's:^intel\/avs/d' \
+	-i -e '/^intel\/avs/d' \
 	
-	-i -e 's:^intel\/catpt/d' \
+	-i -e '/^intel\/catpt/d' \
 	
-	-i -e 's:^intel\/dsp_fw/d' \
+	-i -e '/^intel\/dsp_fw/d' \
 	
-	-i -e 's:^intel\/fw_sst/d' \
+	-i -e '/^intel\/fw_sst/d' \
 	
-	-i -e 's:^intel\/ipu/d' \
+	-i -e '/^intel\/ipu/d' \
 	
-	-i -e 's:^intel\/ipu3/d' \
+	-i -e '/^intel\/ipu3/d' \
 	
-	-i -e 's:^intel\/irci_irci/d' \
+	-i -e '/^intel\/irci_irci/d' \
 	
-	-i -e 's:^intel\/vsc/d' \
+	-i -e '/^intel\/vsc/d' \
 	
-	-i -e 's:^isdbt/d' \
+	-i -e '/^isdbt/d' \
 	
-	-i -e 's:^iwlwifi/d' \
+	-i -e '/^iwlwifi/d' \
 	
-	-i -e 's:^nvidia\/a/d' \
+	-i -e '/^nvidia\/a/d' \
 	
-	-i -e 's:^nvidia\/g/d' \
+	-i -e '/^nvidia\/g/d' \
 	
-	-i -e 's:^nvidia\/tu/d' \
+	-i -e '/^nvidia\/tu/d' \
 	
-	-i -e 's:^lgs8g75/d' \
+	-i -e '/^lgs8g75/d' \
 	
-	-i -e 's:^libertas/d' \
+	-i -e '/^libertas/d' \
 	
-	-i -e 's:^liquidio/d' \
+	-i -e '/^liquidio/d' \
 	
-	-i -e 's:^mellanox/d' \
+	-i -e '/^mellanox/d' \
 	
-	-i -e 's:^mediatek\/mt76/d' \
+	-i -e '/^mediatek\/mt76/d' \
 	
-	-i -e 's:^mediatek\/mt79/d' \
+	-i -e '/^mediatek\/mt79/d' \
 	
-	-i -e 's:^mediatek\/BT/d' \
+	-i -e '/^mediatek\/BT/d' \
 	
-	-i -e 's:^mediatek\/WIFI/d' \
+	-i -e '/^mediatek\/WIFI/d' \
 	
-	-i -e 's:^mrvl\/prestera/d' \
+	-i -e '/^mrvl\/prestera/d' \
 	
-	-i -e 's:^mrvl\/sd8787/d' \
+	-i -e '/^mrvl\/sd8787/d' \
 	
-	-i -e 's:^mt76/d' \
+	-i -e '/^mt76/d' \
 	
-	-i -e 's:^netronome/d' \
+	-i -e '/^netronome/d' \
 	
-	-i -e 's:^nxp/d' \
+	-i -e '/^nxp/d' \
 	
-	-i -e 's:^qca/d' \
+	-i -e '/^qca/d' \
 	
-	-i -e 's:^qcom/d' \
+	-i -e '/^qcom/d' \
 	
-	-i -e 's:^qed/d' \
+	-i -e '/^qed/d' \
 	
-	-i -e 's:^radeon/d' \
+	-i -e '/^radeon/d' \
 	
-	-i -e 's:^rtl_bt/d' \
+	-i -e '/^rtl_bt/d' \
 	
-	-i -e 's:^rtlwifi/d' \
+	-i -e '/^rtlwifi/d' \
 	
-	-i -e 's:^rtw88/d' \
+	-i -e '/^rtw88/d' \
 	
-	-i -e 's:^rtw89/d' \
+	-i -e '/^rtw89/d' \
 	
-	-i -e 's:^sms1xxx/d' \
+	-i -e '/^sms1xxx/d' \
 	
-	-i -e 's:^tdmb/d' \
+	-i -e '/^tdmb/d' \
 	
-	-i -e 's:^ti-connectivity/d' \
+	-i -e '/^ti-connectivity/d' \
 	
-	-i -e 's:^v4l-cx2/d' \
+	-i -e '/^v4l-cx2/d' \
 	
 	linux-firmware.files
 	
@@ -1114,391 +1114,3 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
  
 	
 %changelog
-	
-* Fri Jan 10 2025 Peter Robinson <pbrobinson@fedoraproject.org> - 20250109-1
-	
-- Update to 20250109
-	
-- cirrus: cs35l41: Add Firmware for Ayaneo system 1f660105
-	
-- rtl_bt: Add separate config for RLT8723CS Bluetooth part
-	
-- amdgpu: revert some firmwares
-	
-- WHENCE: Link the Raspberry Pi CM5 and 500 to the 4B
-	
-- Add support to install files/symlinks in parallel.
-	
-- rtl_bt: Update RTL8852B BT USB FW to 0x04BE_1F5E
-	
-- cnm: update chips&media wave521c firmware.
-	
-- rtl_nic: add firmware rtl8125bp-2
-	
-- qcom: venus-5.4: update firmware binary for sc7180 and qcs615
-	
-- cirrus: cs35l56: Correct filenames of SSID 17aa3832
-	
-- cirrus: cs35l56: Add and update firmware for various Cirrus CS35L54/CS35L56 laptops
-	
-- cirrus: cs35l56: Correct SSID order for 103c8d01 103c8d08 10431f43
-	
-- rtl_nic: add firmware rtl8125d-2
-	
- 
-	
-* Tue Dec 10 2024 Peter Robinson <pbrobinson@fedoraproject.org> - 20241210-1
-	
-- Update to upstream 20241210
-	
-- Update firmware file for Intel BlazarU core
-	
-- amdgpu: numerous firmware updates
-	
-- upstream amdnpu firmware
-	
-- QCA: Add Bluetooth nvm files for WCN785x
-	
-- i915: Update Xe2LPD DMC to v2.24
-	
-- cirrus: cs35l56: Add firmware for Cirrus CS35L56 for various Dell laptops
-	
-- iwlwifi: add Bz-gf FW for core89-91 release
-	
-- QCA: Update Bluetooth WCN785x firmware to 2.0.0-00515-2
-	
-- ice: update ice DDP wireless_edge package to 1.3.20.0
-	
-- ice: update ice DDP comms package to 1.3.52.0
-	
-- ice: update ice DDP package to ice-1.3.41.0
-	
-- amdgpu: update DMCUB to v9.0.10.0 for DCN314/DCN351
-	
-- Update AMD cpu microcode
-	
-- xe: Update GUC to v70.36.0 for BMG, LNL
-	
-- i915: Update GUC to v70.36.0 for ADL-P, DG1, DG2, MTL, TGL
-	
-- iwlwifi: add Bz-gf FW for core91-69 release
-	
-- qcom: venus-5.4: add venus firmware file for qcs615
-	
-- qcom: update venus firmware file for SC7280
-	
-- QCA: Add 22 bluetooth firmware nvm files for QCA2066
-	
-- mediatek MT7921/MT7922: update bluetooth firmware
-	
-- update for MT7921/MT7922 WiFi device
-	
-- qcom: Add QDU100 firmware image files.
-	
-- qcom: Update aic100 firmware files
-	
- 
-	
-* Mon Nov 11 2024 Peter Robinson <pbrobinson@fedoraproject.org> - 20241110-1
-	
-- Update to upstream 20241110
-	
-- rtl_bt: Update RTL8852BT/RTL8852BE-VT BT USB FW to 0x04D7_63F7
-	
-- cnm: update chips&media wave521c firmware.
-	
-- MT7920: update WiFi/bluetooth firmware
-	
-- copy-firmware.sh: Run check_whence.py only if in a git repo
-	
-- cirrus: cs35l56: Add firmware for Cirrus CS35L56 for various Dell laptops
-	
-- amdgpu: update DMCUB to v9.0.10.0 for DCN351
-	
-- rtw89: 8852a: update fw to v0.13.36.2
-	
-- rtw88: Add firmware v52.14.0 for RTL8812AU
-	
-- i915: Update Xe2LPD DMC to v2.23
-	
-- MT7925: update WiFi/bluetooth firmware
-	
-- WHENCE: Add sof-tolg for mt8195
-	
-- Update firmware file for Intel BlazarI core
-	
-- qcom: Add link for QCS6490 GPU firmware
-	
-- qcom: update gpu firmwares for qcs615 chipset
-	
-- cirrus: cs35l56: Update firmware for Cirrus Amps for some HP laptops
-	
-- ath11k: move WCN6750 firmware to the device-specific subdir
-	
-- xe: Update LNL GSC to v104.0.0.1263
-	
-- i915: Update MTL/ARL GSC to v102.1.15.1926
-	
-- amdgpu: DMCUB updates for various AMDGPU ASICs
-	
-- mediatek: Add sof-tolg for mt8195
-	
-- i915: Add Xe3LPD DMC
-	
-- Add firmware for Cirrus CS35L41
-	
-- Update firmware file for Intel BlazarU core
-	
-- Makefile: error out of 'install' if COPYOPTS is set
-	
-- check_whence.py: skip some validation if git ls-files fails
-	
-- qcom: Add Audio firmware for X1E80100 CRD/QCPs
-	
-- amdgpu: DMCUB updates forvarious AMDGPU ASICs
-	
-- brcm: replace NVRAM for Jetson TX1
-	
- 
-	
-* Sat Oct 19 2024 Adam Williamson <awilliam@redhat.com> - 20241017-2
-	
-- Fix compression / deduplication for upstream changes in 20241017
-	
- 
-	
-* Thu Oct 17 2024 Peter Robinson <pbrobinson@fedoraproject.org> - 20241017-1
-	
-- Update to upstream 20241017
-	
-- rtlwifi: Update firmware for RTL8192FU to v7.3
-	
-- Remove execute bit from firmware files
-	
-- rtl_nic: add firmware rtl8125d-1
-	
-- iwlwifi: add gl/Bz FW for core91-69 release
-	
-- iwlwifi: update ty/So/Ma firmwares for core91-69 release
-	
-- iwlwifi: update cc/Qu/QuZ firmwares for core91-69 release
-	
-- cirrus: cs35l56: Add firmware for Cirrus CS35L56 for somt7996me ASUS/HP/Lenovo Laptops
-	
-- update firmware for en8811h 2.5G ethernet phy
-	
-- mtk_wed: add firmware for mt7988 Wireless Ethernet Dispatcher
-	
-- ath12k: WCN7850 hw2.0: update board-2.bin
-	
-- ath12k: QCN9274 hw2.0: add to WLAN.WBE.1.3.1-00162-QCAHKSWPL_SILICONZ-1
-	
-- ath12k: QCN9274 hw2.0: add board-2.bin
-	
-- Add a link from TAS2XXX1EB3.bin -> ti/tas2781/TAS2XXX1EB30.bin
-	
-- tas2781: Upload dsp firmware for ASUS laptop 1EB30 & 1EB31
-	
-- rtlwifi: Add firmware v39.0 for RTL8192DU
-	
-- Revert "ath12k: WCN7850 hw2.0: update board-2.bin"
-	
-- QCA: Add Bluetooth firmwares for WCN785x with UART transport
-	
-- amdgpu: DMCUB DCN35 update
-	
-- brcm: Add BCM4354 NVRAM for Jetson TX1
-	
-- brcm: Link FriendlyElec NanoPi M4 to AP6356S nvram
-	
-- add firmware for MediaTek Bluetooth chip (MT7920)
-	
-- add firmware for MT7920
-	
-- amdgpu: update numerous firmware
-	
-- qcom: update gpu firmwares for qcm6490 chipset
-	
-- mt76: mt7996: add firmware files for mt7992/mt7996 chipset variants
-	
-- qcom: add gpu firmwares for sa8775p chipset
-	
-- rtw89: 8922a: add fw format-2 v0.35.42.1
-	
-- WHENCE: Fix battmgr.jsn entry type
-	
-- qcom: qcm6490: add ADSP and CDSP firmware
-	
-- Update firmware file for various Intel Bluetooth
-	
-- rtl_bt: Update RTL8852B BT USB FW to 0x0447_9301
-	
-- realtek: rt1320: Add patch firmware of MCU
-	
- 
-	
-* Mon Sep  9 2024 Peter Robinson <pbrobinson@fedoraproject.org> - 20240909-1
-	
-- Update to upstream 20240909
-	
-- i915: Update MTL DMC v2.23
-	
-- cirrus: cs35l56: Add firmware for Cirrus CS35L54 for some HP laptops
-	
-- amdgpu: Revert sienna cichlid dmcub firmware update
-	
-- iwlwifi: add Bz FW for core89-58 release
-	
-- rtl_nic: add firmware rtl8126a-3
-	
-- update  MT7921 WiFi/bluetooth device firmware
-	
-- amdgpu: update DMCUB to v0.0.232.0 for DCN314 and DCN351
-	
-- amdgpu: DMCUB updates forvarious AMDGPU ASICs
-	
-- rtw89: 8922a: add fw format-1 v0.35.41.0
-	
-- update  MT7925 WiFi/bluetooth device firmware
-	
-- rtl_bt: Add firmware and config files for RTL8922A
-	
-- rtl_bt: Add firmware file for the the RTL8723CS Bluetooth part
-	
-- rtl_bt: de-dupe identical config.bin files
-	
-- rename rtl8723bs_config-OBDA8723.bin -> rtl_bt/rtl8723bs_config.bin
-	
-- Update AMD SEV firmware
-	
-- update firmware for MT7996
-	
-- Revert "i915: Update MTL DMC v2.22"
-	
-- ath12k: WCN7850 hw2.0: update board-2.bin
-	
-- ath11k: WCN6855 hw2.0: update to WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
-	
-- ath11k: WCN6855 hw2.0: update board-2.bin
-	
-- ath11k: QCA2066 hw2.1: add to WLAN.HSP.1.1-03926.13-QCAHSPSWPL_V2_SILICONZ_CE-2.52297.3
-	
-- ath11k: QCA2066 hw2.1: add board-2.bin
-	
-- ath11k: IPQ5018 hw1.0: update to WLAN.HK.2.6.0.1-01291-QCAHKSWPL_SILICONZ-1
-	
-- qcom: vpu: add video firmware for sa8775p
-	
-- amdgpu: DMCUB updates for various AMDGPU ASICs
-	
- 
-	
-* Mon Sep 02 2024 Miroslav SuchÃ½ <msuchy@redhat.com> - 20240811-3
-	
-- convert license to SPDX
-	
- 
-	
-* Fri Aug 16 2024 Peter Robinson <pbrobinson@fedoraproject.org> - 20240811-2
-	
-- Delete intel sound topology files - duped in alsa-sof-firmware
-	
- 
-	
-* Mon Aug 12 2024 Peter Robinson <pbrobinson@fedoraproject.org> - 20240811-1
-	
-- Update to upstream 20240811
-	
-- qcom: update path for video firmware for vpu-1/2/3.0
-	
-- QCA: Update Bluetooth WCN685x 2.1 firmware to 2.1.0-00642
-	
-- rtw89: 8852c: add fw format-1 v0.27.97.0
-	
-- rtw89: 8852bt: add firmware 0.29.91.0
-	
-- amdgpu: A lot of firmware updates
-	
-- mediatek: Update mt8195 SOF firmware
-	
-- xe: First GuC release v70.29.2 for BMG
-	
-- xe: Add GuC v70.29.2 for LNL
-	
-- i915: Add GuC v70.29.2 for ADL-P, DG1, DG2, MTL, and TGL
-	
-- i915: Update MTL DMC v2.22, MTL GSC to v102.0.10.1878
-	
-- xe: Add BMG HuC 8.2.10, GSC 104.0.0.1161 for LNL, LNL HuC 9.4.13
-	
-- i915: update DG2 HuC to v7.10.16
-	
-- QCA: Update Bluetooth QCA2066 firmware to 2.1.0-00641
-	
-- update firmware for MT7921/MT7922 WiFi device
-	
-- update firmware for mediatek bluetooth chip (MT7921/MT7922)
-	
-- iwlwifi: add gl FW for core89-58 release
-	
-- iwlwifi: update cc/Qu/QuZ firmwares for core89-58 release
-	
-- mediatek: Update mt8195 SOF firmware and sof-tplg
-	
-- ASoC: tas2781: fix the license issue for tas781 firmware
-	
-- rtl_bt: Update RTL8852B BT USB FW to 0x048F_4008
-	
-- i915: Update Xe2LPD DMC to v2.21
-	
-- qcom: move signed x1e80100 signed firmware to the SoC subdir
-	
-- qcom: add video firmware file for vpu-3.0
-	
-- amdgpu: update DMCUB to v0.0.225.0 for Various AMDGPU Asics
-	
-- qcom: add gpu firmwares for x1e80100 chipset
-	
-- add firmware for qat_402xx devices
-	
-- Update AMD cpu microcode
-	
-- intel: avs: Add numerous sound topology files
-	
-- Add a copy of Apache-2.0
-	
-- intel: avs: Update AudioDSP base firmware for APL-based platforms
-	
- 
-	
-* Wed Jul 10 2024 Peter Robinson <pbrobinson@fedoraproject.org> - 20240709-1
-	
-- Update to upstream 20240709
-	
-- Add ISH firmware file for Intel Lunar Lake platform
-	
-- amdgpu: update DMCUB to v0.0.224.0 for Various AMDGPU Asics
-	
-- cirrus: cs35l41: Update various firmware for ASUS laptops using CS35L41
-	
-- amdgpu: Update ISP FW for isp v4.1.1
-	
-- mediatek: Update MT8173 VPU firmware to v1.2.0
-	
-- qcom: Add AIC100 firmware files
-	
-- amlogic: Update bluetooth firmware binary
-	
-- Various Intel Bluetooth firmware updates
-	
-- rtl_bt: Update RTL8822C BT UART/USB firmware
-	
-- amdgpu: update DMCUB to v0.0.222.0 for DCN314
-	
-- iwlwifi: add ty/So/Ma firmwares for core88-87 release
-	
-- iwlwifi: update cc/Qu/QuZ firmwares for core88-87 release
-	
-- add new cc33xx firmware for TI cc33xx WiFi chips
-	
-- cirrus: cs35l56: Update firmware for Cirrus CS35L56 for various ASUS laptops
