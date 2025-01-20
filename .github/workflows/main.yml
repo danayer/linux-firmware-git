@@ -1,0 +1,67 @@
+name: Update Linux Firmware
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  # Запуск каждые 12 часов
+  workflow_dispatch:  # Позволяет запускать вручную
+
+jobs:
+  check-firmware-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get current date
+        id: date
+        run: echo "TODAY=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Get latest commit from linux-firmware
+        id: firmware
+        run: |
+          git clone --bare https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+          cd linux-firmware.git
+          LATEST_COMMIT=$(git rev-parse HEAD)
+          LATEST_SHORT_COMMIT=${LATEST_COMMIT:0:7}
+          echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
+          echo "LATEST_SHORT_COMMIT=$LATEST_SHORT_COMMIT" >> $GITHUB_ENV
+
+      - name: Check current spec version
+        id: spec
+        run: |
+          CURRENT_COMMIT=$(grep '%global commit' linux-firmware.spec | awk '{print $3}')
+          if [ "$CURRENT_COMMIT" != "${{ env.LATEST_COMMIT }}" ]; then
+            CURRENT_VERSION=$(grep 'Version:' linux-firmware.spec | awk '{print $2}')
+            CURRENT_DATE=${CURRENT_VERSION%.*.*}
+            CURRENT_BUILD=${CURRENT_VERSION##*.}
+            if [ "$CURRENT_DATE" = "${{ env.TODAY }}" ]; then
+              NEW_BUILD=$((CURRENT_BUILD + 1))
+            else
+              NEW_BUILD=1
+            fi
+            echo "UPDATE_NEEDED=true" >> $GITHUB_ENV
+            echo "NEW_VERSION=${{ env.TODAY }}.1.${NEW_BUILD}" >> $GITHUB_ENV
+          else
+            echo "UPDATE_NEEDED=false" >> $GITHUB_ENV
+          fi
+
+      - name: Update spec file
+        if: env.UPDATE_NEEDED == 'true'
+        run: |
+          sed -i "s/%global commit .*/%global commit ${{ env.LATEST_COMMIT }}/" linux-firmware.spec
+          sed -i "s/%global shortcommit .*/%global shortcommit ${{ env.LATEST_SHORT_COMMIT }}/" linux-firmware.spec
+          sed -i "s/Version:.*/Version:    ${{ env.NEW_VERSION }}/" linux-firmware.spec
+
+      - name: Create Pull Request
+        if: env.UPDATE_NEEDED == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update linux-firmware to ${{ env.LATEST_SHORT_COMMIT }}"
+          title: "Update linux-firmware to ${{ env.LATEST_SHORT_COMMIT }}"
+          body: |
+            Updated linux-firmware:
+            - New commit: ${{ env.LATEST_COMMIT }}
+            - New version: ${{ env.NEW_VERSION }}
+          branch: update-firmware
+          delete-branch: true
