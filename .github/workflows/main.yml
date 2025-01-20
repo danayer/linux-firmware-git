@@ -21,7 +21,7 @@ jobs:
       - name: Get latest commit from linux-firmware
         id: firmware
         run: |
-          LATEST_COMMIT=$(curl -s https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/ | grep -o 'commit [a-f0-9]\{40\}' | head -n1 | cut -d' ' -f2)
+          LATEST_COMMIT=$(curl -s https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/ | grep -o 'commit/?id=[a-f0-9]\{40\}' | head -n1 | cut -d= -f2)
           LATEST_SHORT_COMMIT=${LATEST_COMMIT:0:7}
           echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
           echo "LATEST_SHORT_COMMIT=$LATEST_SHORT_COMMIT" >> $GITHUB_ENV
