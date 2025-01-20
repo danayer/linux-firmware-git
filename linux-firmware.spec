@@ -577,41 +577,27 @@ popd
 	
 pushd %{buildroot}/%{_firmwarepath}
 	
-# Создаем временные файлы для списков
+# Генерируем списки файлов 
 	
-TMP_FILES=`mktemp`
+find . \! -type d | sed -e 's:^./::' > %{_builddir}/linux-firmware-main/linux-firmware.files
 	
-TMP_DIRS=`mktemp`
-	
-# Генерируем списки файлов и директорий
-	
-find . \! -type d > $TMP_FILES
-	
-find . -type d | sed -e '/^.$/d' > $TMP_DIRS
-	
-# Копируем в целевые файлы
-	
-cp $TMP_FILES %{_builddir}/linux-firmware-main/linux-firmware.files
-	
-cp $TMP_DIRS %{_builddir}/linux-firmware-main/linux-firmware.dirs
-	
-# Удаляем временные файлы
-	
-rm -f $TMP_FILES $TMP_DIRS
+find . -type d | sed -e '/^.$/d' -e 's:^./::' > %{_builddir}/linux-firmware-main/linux-firmware.dirs
 	
 popd
-
+	
+# Изменим эту часть:
+	
 cd %{_builddir}/linux-firmware-main
-
-sed -i -e 's:^./::' linux-firmware.{files,dirs}
 	
-sed \
+# Фильтруем файлы с помощью одной команды sed
 	
-	-i -e '/^a300_p/d' \
+sed -i \
 	
-	-i -e '/^amdgpu/d' \
+	-e '/^a300_p/d' \
 	
-	-i -e '/^amdnpu/d' \
+	-e '/^amdgpu/d' \
+	
+	-e '/^amdnpu/d' \
 	
 	-i -e '/^amd/d' \
 	
