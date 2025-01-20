@@ -584,6 +584,8 @@ find . \! -type d > $FILEDIR/linux-firmware.files
 find . -type d | sed -e '/^.$/d' > $FILEDIR/linux-firmware.dirs
 	
 popd
+
+cd $FILEDIR
 	
 sed -i -e 's:^./::' linux-firmware.{files,dirs}
 	
