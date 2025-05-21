@@ -27,7 +27,7 @@ BuildArch:	noarch
 	
  
 	
-Source0:	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-main.tar.gz
+Source0:	https://gitlab.com/kernel-firmware/linux-firmware/-/archive/main/linux-firmware-main.tar.gz
 	
  
 	
