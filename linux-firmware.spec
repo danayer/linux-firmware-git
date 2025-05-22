@@ -699,16 +699,11 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
  
 	
 %files -n nvidia-gpu-firmware
-	
 %license LICENCE.nvidia
-	
 %dir %{_firmwarepath}/nvidia/
-	
-%{_firmwarepath}/nvidia/a*/
-	
-%{_firmwarepath}/nvidia/g*/
-	
-%{_firmwarepath}/nvidia/tu*/
+%{_firmwarepath}/nvidia/a*
+%{_firmwarepath}/nvidia/g*
+%{_firmwarepath}/nvidia/tu*
 	
  
 	
@@ -1059,3 +1054,6 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
  
 	
 %changelog
+* Mon May 22 2023 Package Maintainer <maintainer@example.com> - 20250522.1.1-1
+- Update to the latest upstream firmware
+- Fix nvidia firmware packaging
