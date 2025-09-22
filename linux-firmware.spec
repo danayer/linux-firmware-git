@@ -6,14 +6,14 @@
 	
 %define _binaries_in_noarch_packages_terminate_build 0
 
-%global commit 493de17dee9901605e69ad804815cd7408d84547
+%global commit 603b337de5dcc80b8153561ed38d5b729e2bfc82
 
-%global shortcommit 493de17
+%global shortcommit 603b337
  
 	
 Name:		linux-firmware
 	
-Version:    20250920.1.1
+Version:    20250922.1.1
 	
 Release:	1%{?dist}
 	
