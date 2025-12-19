@@ -2,61 +2,74 @@ name: Update Linux Firmware
 
 on:
   schedule:
-    - cron: '0 */12 * * *'  # Запуск каждые 12 часов
-  workflow_dispatch:  # Позволяет запускать вручную
+    - cron: '0 */12 * * *'   # каждые 12 часов
+  workflow_dispatch:
 
 jobs:
   check-firmware-updates:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Get current date
-        id: date
-        run: echo "TODAY=$(date +'%Y%m%d')" >> $GITHUB_ENV
+        run: echo "TODAY=$(date +'%Y%m%d')" >> "$GITHUB_ENV"
 
-      - name: Get latest commit from linux-firmware
-        id: firmware
+      - name: Get latest linux-firmware commit
         run: |
-          LATEST_COMMIT=$(curl -s https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/ | grep -o 'commit/?id=[a-f0-9]\{40\}' | head -n1 | cut -d= -f2)
-          LATEST_SHORT_COMMIT=${LATEST_COMMIT:0:7}
-          echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
-          echo "LATEST_SHORT_COMMIT=$LATEST_SHORT_COMMIT" >> $GITHUB_ENV
+          LATEST_COMMIT=$(git ls-remote https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git HEAD | awk '{print $1}')
+          if [ -z "$LATEST_COMMIT" ]; then
+            echo "Failed to fetch latest commit"
+            exit 1
+          fi
+
+          echo "LATEST_COMMIT=$LATEST_COMMIT" >> "$GITHUB_ENV"
+          echo "LATEST_SHORT_COMMIT=${LATEST_COMMIT:0:7}" >> "$GITHUB_ENV"
 
       - name: Check current spec version
-        id: spec
         run: |
-          CURRENT_COMMIT=$(grep '%global commit' linux-firmware.spec | awk '{print $3}')
-          if [ "$CURRENT_COMMIT" != "${{ env.LATEST_COMMIT }}" ]; then
-            CURRENT_VERSION=$(grep 'Version:' linux-firmware.spec | awk '{print $2}')
-            CURRENT_DATE=${CURRENT_VERSION%.*.*}
-            CURRENT_BUILD=${CURRENT_VERSION##*.}
-            if [ "$CURRENT_DATE" = "${{ env.TODAY }}" ]; then
+          # Текущий commit из spec (не падает, если строки нет)
+          CURRENT_COMMIT=$(sed -n 's/^%global[[:space:]]\+commit[[:space:]]\+\([a-f0-9]\+\).*/\1/p' linux-firmware.spec)
+
+          if [ "$CURRENT_COMMIT" != "$LATEST_COMMIT" ]; then
+            CURRENT_VERSION=$(sed -n 's/^[[:space:]]*Version:[[:space:]]*\([0-9.]\+\).*/\1/p' linux-firmware.spec)
+
+            if [[ "$CURRENT_VERSION" =~ ^([0-9]{8})\.1\.([0-9]+)$ ]]; then
+              CURRENT_DATE="${BASH_REMATCH[1]}"
+              CURRENT_BUILD="${BASH_REMATCH[2]}"
+            else
+              CURRENT_DATE=""
+              CURRENT_BUILD=0
+            fi
+
+            if [ "$CURRENT_DATE" = "$TODAY" ]; then
               NEW_BUILD=$((CURRENT_BUILD + 1))
             else
               NEW_BUILD=1
             fi
-            echo "UPDATE_NEEDED=true" >> $GITHUB_ENV
-            echo "NEW_VERSION=${{ env.TODAY }}.1.${NEW_BUILD}" >> $GITHUB_ENV
+
+            echo "UPDATE_NEEDED=true" >> "$GITHUB_ENV"
+            echo "NEW_VERSION=$TODAY.1.$NEW_BUILD" >> "$GITHUB_ENV"
           else
-            echo "UPDATE_NEEDED=false" >> $GITHUB_ENV
+            echo "UPDATE_NEEDED=false" >> "$GITHUB_ENV"
           fi
 
       - name: Update spec file
         if: env.UPDATE_NEEDED == 'true'
         run: |
-          sed -i "s/%global commit .*/%global commit ${{ env.LATEST_COMMIT }}/" linux-firmware.spec
-          sed -i "s/%global shortcommit .*/%global shortcommit ${{ env.LATEST_SHORT_COMMIT }}/" linux-firmware.spec
-          sed -i "s/Version:.*/Version:    ${{ env.NEW_VERSION }}/" linux-firmware.spec
+          sed -i "s/^%global[[:space:]]\+commit.*/%global commit $LATEST_COMMIT/" linux-firmware.spec
+          sed -i "s/^%global[[:space:]]\+shortcommit.*/%global shortcommit $LATEST_SHORT_COMMIT/" linux-firmware.spec
+          sed -i "s/^[[:space:]]*Version:.*/Version:    $NEW_VERSION/" linux-firmware.spec
 
       - name: Commit changes
         if: env.UPDATE_NEEDED == 'true'
         run: |
-          git config --global user.name 'GitHub Actions Bot'
-          git config --global user.email 'actions@github.com'
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
           git add linux-firmware.spec
-          git commit -m "Update linux-firmware to ${{ env.LATEST_SHORT_COMMIT }}"
+          git commit -m "Update linux-firmware to $LATEST_SHORT_COMMIT"
           git push
