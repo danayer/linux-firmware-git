@@ -5,15 +5,12 @@
 %global _firmwarepath	/usr/lib/firmware
 	
 %define _binaries_in_noarch_packages_terminate_build 0
-
-%global commit 881c549a82203abd9a88870ba27f3e8ce754b2c4
-
-%global shortcommit 881c549
+	
  
 	
 Name:		linux-firmware
 	
-Version:    20251219.1.1
+Version:	20251219.1.1
 	
 Release:	1%{?dist}
 	
@@ -47,7 +44,11 @@ BuildRequires:	rdfind
 	
  
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
+	
+Requires:	((linux-firmware = %{version}-%{release}) if linux-firmware)
+	
+Recommends:	qcom-wwan-firmware
 	
 Recommends:	amd-gpu-firmware
 	
@@ -103,7 +104,7 @@ Summary:	Firmware for AMD GPUs
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n amd-gpu-firmware
 	
@@ -117,7 +118,7 @@ Summary:	Firmware for Intel GPUs
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n intel-gpu-firmware
 	
@@ -135,7 +136,7 @@ Summary:	Firmware for NVIDIA GPUs
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n nvidia-gpu-firmware
 	
@@ -151,7 +152,7 @@ Summary:	Microcode updates for AMD CPUs
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n amd-ucode-firmware
 	
@@ -159,7 +160,7 @@ Microcode updates for AMD CPUs, AMD SEV and AMD TEE.
 	
  
 	
-# WiFi/Bluetooth firmwares
+# WiFi/Bluetooth/WWAN firmwares
 	
 %package -n atheros-firmware
 	
@@ -167,7 +168,7 @@ Summary:	Firmware for Qualcomm Atheros WiFi/Bluetooth adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n atheros-firmware
 	
@@ -181,7 +182,7 @@ Summary:	Firmware for Broadcom/Cypress brcmfmac WiFi/Bluetooth adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n brcmfmac-firmware
 	
@@ -195,7 +196,7 @@ Summary:	Firmware for Intel(R) Wireless WiFi Link 3945(A)BG and 4965AGN adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n iwlegacy-firmware
 	
@@ -215,7 +216,7 @@ Summary:	DVM Firmware for Intel(R) Wireless WiFi adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n iwlwifi-dvm-firmware
 	
@@ -235,7 +236,11 @@ Summary:	MVM Firmware for Intel(R) Wireless WiFi adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
+	
+# Same hardware, newer firmware with a different driver, enables smooth migration
+	
+Requires:	iwlwifi-mld-firmware = %{version}-%{release}
 	
 %description -n iwlwifi-mvm-firmware
 	
@@ -249,13 +254,33 @@ provided LICENSE file. Please read it carefully.
 	
  
 	
+%package -n iwlwifi-mld-firmware
+	
+Summary:	MLD Firmware for Intel(R) Wireless WiFi adapters
+	
+License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
+	
+Requires:	linux-firmware-whence = %{version}-%{release}
+	
+%description -n iwlwifi-mld-firmware
+	
+This package contains the firmware required by the iwlwifi driver
+	
+for Linux built with MLD firmware support (CONFIG_IWLMLD=y/m).  Usage of
+	
+the firmware is subject to the terms and conditions contained inside the
+	
+provided LICENSE file. Please read it carefully.
+	
+ 
+	
 %package -n libertas-firmware
 	
 Summary:	Firmware for Marvell Libertas SD/USB WiFi Network Adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n libertas-firmware
 	
@@ -271,7 +296,7 @@ Summary:	Firmware for Mediatek 7600/7900 series WiFi/Bluetooth adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n mt7xxx-firmware
 	
@@ -285,7 +310,7 @@ Summary:	Firmware for NXP WiFi/Bluetooth/UWB adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n nxpwireless-firmware
 	
@@ -299,11 +324,27 @@ Summary:	Firmware for Realtek WiFi/Bluetooth adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n realtek-firmware
 	
 Firmware for Realtek WiFi/Bluetooth adapters
+	
+ 
+	
+%package -n qcom-wwan-firmware
+	
+Summary:	Firmware for Qualcomm Wireless WAN modems
+	
+License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
+	
+Requires:	linux-firmware-whence = %{version}-%{release}
+	
+%description -n qcom-wwan-firmware
+	
+Firmware for Qualcomm Snapdragon X-series (SDX) wireless WAN modems used
+	
+across numerous WWAN cards from numerous vendors.
 	
  
 	
@@ -313,7 +354,7 @@ Summary:	Firmware for Texas Instruments WiFi/Bluetooth adapters
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n tiwilink-firmware
 	
@@ -329,7 +370,7 @@ Summary:	Firmware for Cavium LiquidIO Intelligent Server Adapter
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n liquidio-firmware
 	
@@ -343,7 +384,7 @@ Summary:	Firmware for Mellanox Spectrum 1/2/3 Switches
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n mlxsw_spectrum-firmware
 	
@@ -357,7 +398,7 @@ Summary:	Firmware for Marvell Prestera Switchdev/ASIC devices
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n mrvlprestera-firmware
 	
@@ -371,11 +412,29 @@ Summary:	Firmware for Netronome Smart NICs
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n netronome-firmware
 	
 Firmware for Netronome Smart NICs
+	
+ 
+	
+%package -n qcom-accel-firmware
+	
+Summary:	Firmware for Qualcomm Technologies data center / Open-vRAN Accelerators
+	
+License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
+	
+Requires:	linux-firmware-whence = %{version}-%{release}
+	
+%description -n qcom-accel-firmware
+	
+Firmware for Qualcomm Technologies data center and Open-vRAN accelerators
+	
+including the X100 5G RAN Accelerator Card, the QRU100 5G RAN Platform
+	
+and the Cloud AI 100.
 	
  
 	
@@ -385,7 +444,7 @@ Summary:	Firmware for Marvell FastLinQ adapters family
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n qed-firmware
 	
@@ -399,23 +458,35 @@ and ethernet including SRIOV, DCB etc.
 	
 # Silicon Vendor specific
 	
+%package -n mediatek-firmware
+	
+Summary:	Firmware for Mediatek SoCs
+	
+License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
+	
+Requires:	linux-firmware-whence = %{version}-%{release}
+	
+%description -n mediatek-firmware
+	
+Firmware for various compoents in Mediatek SoCs, in particular SCP.
+	
+ 
+	
 %package -n qcom-firmware
 	
 Summary:	Firmware for Qualcomm SoCs
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 Requires:	atheros-firmware = %{version}-%{release}
 	
 %description -n qcom-firmware
 	
-Firmware for various compoents in Qualcomm SoCs including Adreno
+Firmware for various compoents in Qualcomm SoCs including Adreno GPUs,
 	
-GPUs, Venus video encode/decode, Audio DSP, Compute DSP, WWAN
-	
-modem, Sensor DSPs.
+Venus video encode/decode, Audio DSP, Compute DSP, modem, Sensor DSPs.
 	
  
 	
@@ -427,7 +498,7 @@ Summary:	Firmware files for Intel Visual Sensing Controller (IVSC)
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n intel-vsc-firmware
 	
@@ -445,7 +516,7 @@ Summary:	Firmware for Cirrus audio amplifiers and codecs
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n cirrus-audio-firmware
 	
@@ -459,7 +530,7 @@ Summary:	Firmware for Intel audio DSP amplifiers and codecs
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n intel-audio-firmware
 	
@@ -475,7 +546,7 @@ Summary:	Firmware for various DVB broadcast receivers
 	
 License:	LicenseRef-Callaway-Redistributable-no-modification-permitted
 	
-Requires:	linux-firmware-whence
+Requires:	linux-firmware-whence = %{version}-%{release}
 	
 %description -n dvb-firmware
 	
@@ -575,88 +646,251 @@ popd
 	
 # Create file list but exclude firmwares that we place in subpackages
 	
+FILEDIR=`pwd`
+	
 pushd %{buildroot}/%{_firmwarepath}
 	
-# Генерируем списки файлов 
+find . \! -type d > $FILEDIR/linux-firmware.files
 	
-find . \! -type d | sed -e 's:^./::' > %{_builddir}/linux-firmware-main/linux-firmware.files
-	
-find . -type d | sed -e '/^.$/d' -e 's:^./::' > %{_builddir}/linux-firmware-main/linux-firmware.dirs
+find . -type d | sed -e '/^.$/d' > $FILEDIR/linux-firmware.dirs
 	
 popd
 	
-# Изменим эту часть:
+sed -i -e 's:^./::' linux-firmware.{files,dirs}
 	
-cd %{_builddir}/linux-firmware-main
+sed \
 	
-# Разделите фильтрацию на несколько команд
-sed -i \
-  -e '/^a300_p/d' \
-  -e '/^amdgpu/d' \
-  -e '/^amdnpu/d' \
-  -e '/^amd/d' \
-  -e '/^amdtee/d' \
-  -e '/^amd-ucode/d' \
-  -e '/^ar3k/d' \
-  -e '/^ath6k/d' \
-  -e '/^ath9k_htc/d' \
-  -e '/^ath10k/d' \
-  -e '/^ath11k/d' \
-  -e '/^ath12k/d' \
-  -e '/^as102_data/d' \
-  -e '/^av7110/d' \
-  -e '/^brcm/d' \
-  -e '/^cirrus/d' \
-  -e '/^cmmb/d' \
-  -e '/^cypress/d' \
-  -e '/^dvb/d' \
-  -e '/^i915/d' \
-  -e '/^intel\/avs/d' \
-  -e '/^intel\/catpt/d' \
-  -e '/^intel\/dsp_fw/d' \
-  -e '/^intel\/fw_sst/d' \
-  -e '/^intel\/ipu/d' \
-  -e '/^intel\/ipu3/d' \
-  -e '/^intel\/irci_irci/d' \
-  -e '/^intel\/vsc/d' \
-  -e '/^isdbt/d' \
-  -e '/^iwlwifi/d' \
-  -e '/^nvidia\/a/d' \
-  -e '/^nvidia\/g/d' \
-  -e '/^nvidia\/tu/d' \
-  -e '/^lgs8g75/d' \
-  -e '/^libertas/d' \
-  -e '/^liquidio/d' \
-  -e '/^mellanox/d' \
-  -e '/^mediatek\/mt76/d' \
-  -e '/^mediatek\/mt79/d' \
-  -e '/^mediatek\/BT/d' \
-  -e '/^mediatek\/WIFI/d' \
-  -e '/^mrvl\/prestera/d' \
-  -e '/^mrvl\/sd8787/d' \
-  -e '/^mt76/d' \
-  -e '/^netronome/d' \
-  -e '/^nxp/d' \
-  -e '/^qca/d' \
-  -e '/^qcom/d' \
-  -e '/^qed/d' \
-  -e '/^radeon/d' \
-  -e '/^rtl_bt/d' \
-  -e '/^rtlwifi/d' \
-  -e '/^rtw88/d' \
-  -e '/^rtw89/d' \
-  -e '/^sms1xxx/d' \
-  -e '/^tdmb/d' \
-  -e '/^ti-connectivity/d' \
-  -e '/^v4l-cx2/d' \
-  linux-firmware.files
+	-i -e '/^a300_p/d' \
 	
-# Добавляем пути и форматирование
+	-i -e '/^amdgpu/d' \
+	
+	-i -e '/^amdnpu/d' \
+	
+	-i -e '/^amd/d' \
+	
+	-i -e '/^amdtee/d' \
+	
+	-i -e '/^amd-ucode/d' \
+	
+	-i -e '/^ar3k/d' \
+	
+	-i -e '/^ath6k/d' \
+	
+	-i -e '/^ath9k_htc/d' \
+	
+	-i -e '/^ath10k/d' \
+	
+	-i -e '/^ath11k/d' \
+	
+	-i -e '/^ath12k/d' \
+	
+	-i -e '/^as102_data/d' \
+	
+	-i -e '/^av7110/d' \
+	
+	-i -e '/^brcm/d' \
+	
+	-i -e '/^cirrus/d' \
+	
+	-i -e '/^cmmb/d' \
+	
+	-i -e '/^cypress/d' \
+	
+	-i -e '/^dvb/d' \
+	
+	-i -e '/^i915/d' \
+	
+	-i -e '/^intel\/avs/d' \
+	
+	-i -e '/^intel\/catpt/d' \
+	
+	-i -e '/^intel\/IntcSST2.bin/d' \
+	
+	-i -e '/^intel\/dsp_fw/d' \
+	
+	-i -e '/^intel\/fw_sst/d' \
+	
+	-i -e '/^intel\/ipu/d' \
+	
+	-i -e '/^intel\/ipu3/d' \
+	
+	-i -e '/^intel\/irci_irci/d' \
+	
+	-i -e '/^intel\/vsc/d' \
+	
+	-i -e '/^isdbt/d' \
+	
+	-i -e '/^iwlwifi/d' \
+	
+	-i -e '/^intel\/iwlwifi/d' \
+	
+	-i -e '/^nvidia\/a/d' \
+	
+	-i -e '/^nvidia\/g/d' \
+	
+	-i -e '/^nvidia\/tu/d' \
+	
+	-i -e '/^lgs8g75/d' \
+	
+	-i -e '/^libertas/d' \
+	
+	-i -e '/^liquidio/d' \
+	
+	-i -e '/^mellanox/d' \
+	
+	-i -e '/^mediatek/d' \
+	
+	-i -e '/^mrvl\/prestera/d' \
+	
+	-i -e '/^mrvl\/sd8787/d' \
+	
+	-i -e '/^mt76/d' \
+	
+	-i -e '/^netronome/d' \
+	
+	-i -e '/^nxp/d' \
+	
+	-i -e '/^qca/d' \
+	
+	-i -e '/^qcom/d' \
+	
+	-i -e '/^qed/d' \
+	
+	-i -e '/^radeon/d' \
+	
+	-i -e '/^rtl_bt/d' \
+	
+	-i -e '/^rtlwifi/d' \
+	
+	-i -e '/^rtw88/d' \
+	
+	-i -e '/^rtw89/d' \
+	
+	-i -e '/^sms1xxx/d' \
+	
+	-i -e '/^tdmb/d' \
+	
+	-i -e '/^ti-connectivity/d' \
+	
+	-i -e '/^v4l-cx2/d' \
+	
+	linux-firmware.{files,dirs}
+	
 sed -i -e 's!^!/usr/lib/firmware/!' linux-firmware.{files,dirs}
 	
 sed -i -e 's/^/"/;s/$/"/' linux-firmware.files
 	
 sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
+	
+ 
+	
+# temporary workaround for directory->symlink changes/migration
+	
+%pretrans -n nvidia-gpu-firmware -p <lua>
+	
+path = "/usr/lib/firmware/nvidia/ad103"
+	
+st = posix.stat(path)
+	
+if st and st.type == "directory" then
+	
+  status = os.rename(path, path .. ".rpmmoved")
+	
+  if not status then
+	
+    suffix = 0
+	
+    while not status do
+	
+      suffix = suffix + 1
+	
+      status = os.rename(path .. ".rpmmoved", path .. ".rpmmoved." .. suffix)
+	
+    end
+	
+    os.rename(path, path .. ".rpmmoved")
+	
+  end
+	
+end
+	
+path = "/usr/lib/firmware/nvidia/ad104"
+	
+st = posix.stat(path)
+	
+if st and st.type == "directory" then
+	
+  status = os.rename(path, path .. ".rpmmoved")
+	
+  if not status then
+	
+    suffix = 0
+	
+    while not status do
+	
+      suffix = suffix + 1
+	
+      status = os.rename(path .. ".rpmmoved", path .. ".rpmmoved." .. suffix)
+	
+    end
+	
+    os.rename(path, path .. ".rpmmoved")
+	
+  end
+	
+end
+	
+path = "/usr/lib/firmware/nvidia/ad106"
+	
+st = posix.stat(path)
+	
+if st and st.type == "directory" then
+	
+  status = os.rename(path, path .. ".rpmmoved")
+	
+  if not status then
+	
+    suffix = 0
+	
+    while not status do
+	
+      suffix = suffix + 1
+	
+      status = os.rename(path .. ".rpmmoved", path .. ".rpmmoved." .. suffix)
+	
+    end
+	
+    os.rename(path, path .. ".rpmmoved")
+	
+  end
+	
+end
+	
+path = "/usr/lib/firmware/nvidia/ad107"
+	
+st = posix.stat(path)
+	
+if st and st.type == "directory" then
+	
+  status = os.rename(path, path .. ".rpmmoved")
+	
+  if not status then
+	
+    suffix = 0
+	
+    while not status do
+	
+      suffix = suffix + 1
+	
+      status = os.rename(path .. ".rpmmoved", path .. ".rpmmoved." .. suffix)
+	
+    end
+	
+    os.rename(path, path .. ".rpmmoved")
+	
+  end
+	
+end
 	
  
 	
@@ -699,10 +933,15 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
  
 	
 %files -n nvidia-gpu-firmware
+	
 %license LICENCE.nvidia
+	
 %dir %{_firmwarepath}/nvidia/
+	
 %{_firmwarepath}/nvidia/a*
+	
 %{_firmwarepath}/nvidia/g*
+	
 %{_firmwarepath}/nvidia/tu*
 	
  
@@ -769,7 +1008,11 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 	
 %{_firmwarepath}/iwlwifi-3945-*.ucode*
 	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-3945-*.ucode*
+	
 %{_firmwarepath}/iwlwifi-4965-*.ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-4965-*.ucode*
 	
  
 	
@@ -777,29 +1020,29 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 	
 %license LICENCE.iwlwifi_firmware
 	
-%{_firmwarepath}/iwlwifi-100-*.ucode*
+%{_firmwarepath}/iwlwifi-1??-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-105-*.ucode*
-	
-%{_firmwarepath}/iwlwifi-135-*.ucode*
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-1??-*.ucode*
 	
 %{_firmwarepath}/iwlwifi-1000-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-2000-*.ucode*
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-1000-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-2030-*.ucode*
+%{_firmwarepath}/iwlwifi-20?0-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-5000-*.ucode*
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-20?0-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-5150-*.ucode*
+%{_firmwarepath}/iwlwifi-5??0-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-6000-*.ucode*
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-5??0-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-6000g2a-*.ucode*
+%{_firmwarepath}/iwlwifi-60?0-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-6000g2b-*.ucode*
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-60?0-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-6050-*.ucode*
+%{_firmwarepath}/iwlwifi-6000g2?-*.ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-6000g2?-*.ucode*
 	
  
 	
@@ -807,37 +1050,99 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 	
 %license LICENCE.iwlwifi_firmware
 	
-%{_firmwarepath}/iwlwifi-3160-*.ucode*
+%{_firmwarepath}/iwlwifi-316?-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-3168-*.ucode*
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-316?-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-7260-*.ucode*
+%{_firmwarepath}/iwlwifi-726?-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-7265-*.ucode*
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-726?-*.ucode*
 	
 %{_firmwarepath}/iwlwifi-7265D-*.ucode*
 	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-7265D-*.ucode*
+	
 %{_firmwarepath}/iwlwifi-8000C-*.ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-8000C-*.ucode*
 	
 %{_firmwarepath}/iwlwifi-8265-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-9000-*.ucode*
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-8265-*.ucode*
 	
-%{_firmwarepath}/iwlwifi-9260-*.ucode*
+%{_firmwarepath}/iwlwifi-9??0-*.ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-9??0-*.ucode*
 	
 %{_firmwarepath}/iwlwifi-cc-a0-*.ucode*
 	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-cc-a0-*.ucode*
+	
 %{_firmwarepath}/iwlwifi-gl-c0*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-gl-c0*
 	
 %{_firmwarepath}/iwlwifi-ma-b0*
 	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-ma-b0*
+	
 %{_firmwarepath}/iwlwifi-Qu*.ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-Qu*.ucode*
 	
 %{_firmwarepath}/iwlwifi-ty-a0*
 	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-ty-a0*
+	
 %{_firmwarepath}/iwlwifi-so-a0*
 	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-so-a0*
+	
 %{_firmwarepath}/iwlwifi-bz-b0*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-bz-b0*
+	
+%exclude %{_firmwarepath}/iwlwifi-bz-b0*9[7-9].ucode*
+	
+%exclude %{_firmwarepath}/iwlwifi-bz-b0*1??.ucode*
+	
+%exclude %{_firmwarepath}/intel/iwlwifi/iwlwifi-bz-b0*9[7-9].ucode*
+	
+%exclude %{_firmwarepath}/intel/iwlwifi/iwlwifi-bz-b0*1??.ucode*
+	
+%exclude %{_firmwarepath}/iwlwifi-gl-c0*9[7-9].ucode*
+	
+%exclude %{_firmwarepath}/iwlwifi-gl-c0*1??.ucode*
+	
+%exclude %{_firmwarepath}/intel/iwlwifi/iwlwifi-gl-c0*9[7-9].ucode*
+	
+%exclude %{_firmwarepath}/intel/iwlwifi/iwlwifi-gl-c0*1??.ucode*
+	
+ 
+	
+%files -n iwlwifi-mld-firmware
+	
+%license LICENCE.iwlwifi_firmware
+	
+%{_firmwarepath}/iwlwifi-bz-b0*9[7-9].ucode*
+	
+%{_firmwarepath}/iwlwifi-bz-b0*1??.ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-bz-b0*9[7-9].ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-bz-b0*1??.ucode*
+	
+%{_firmwarepath}/iwlwifi-gl-c0*9[7-9].ucode*
+	
+%{_firmwarepath}/iwlwifi-gl-c0*1??.ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-gl-c0*9[7-9].ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-gl-c0*1??.ucode*
+	
+%{_firmwarepath}/iwlwifi-sc-a0-wh-b0-1??.ucode*
+	
+%{_firmwarepath}/intel/iwlwifi/iwlwifi-sc-a0-wh-b0-1??.ucode*
 	
  
 	
@@ -865,7 +1170,11 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 	
 %{_firmwarepath}/mediatek/mt76*
 	
-%{_firmwarepath}/mediatek/mt79*
+%{_firmwarepath}/mediatek/mt791*
+	
+%{_firmwarepath}/mediatek/mt7925/
+	
+%{_firmwarepath}/mediatek/mt7996/
 	
 %{_firmwarepath}/mediatek/BT*
 	
@@ -882,6 +1191,16 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 %dir %{_firmwarepath}/nxp
 	
 %{_firmwarepath}/nxp/*
+	
+ 
+	
+%files -n qcom-wwan-firmware
+	
+%license LICENSE.qcom qcom/NOTICE.txt
+	
+%dir %{_firmwarepath}/qcom
+	
+%{_firmwarepath}/qcom/sdx*/
 	
  
 	
@@ -949,6 +1268,20 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 	
  
 	
+%files -n qcom-accel-firmware
+	
+%dir %{_firmwarepath}/qcom
+	
+%dir %{_firmwarepath}/qcom/aic100
+	
+%dir %{_firmwarepath}/qcom/qdu100
+	
+%{_firmwarepath}/qcom/aic100/*
+	
+%{_firmwarepath}/qcom/qdu100/*
+	
+ 
+	
 %files -n qed-firmware
 	
 %dir %{_firmwarepath}/qed
@@ -959,15 +1292,73 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 	
 # Silicon Vendor specific
 	
+%files -n mediatek-firmware
+	
+%license LICENCE.mediatek
+	
+%dir %{_firmwarepath}/mediatek
+	
+%{_firmwarepath}/mediatek/mt798?*
+	
+%{_firmwarepath}/mediatek/mt8173/
+	
+%{_firmwarepath}/mediatek/mt8183/
+	
+%{_firmwarepath}/mediatek/mt8186/
+	
+%{_firmwarepath}/mediatek/mt8188/
+	
+%{_firmwarepath}/mediatek/mt8189/
+	
+%{_firmwarepath}/mediatek/mt8192/
+	
+%{_firmwarepath}/mediatek/mt8195/
+	
+%{_firmwarepath}/mediatek/mt8196/
+	
+%{_firmwarepath}/mediatek/sof/
+	
+%{_firmwarepath}/mediatek/sof-tplg/
+	
+ 
+	
 %files -n qcom-firmware
 	
 %license LICENSE.qcom LICENSE.qcom_yamato qcom/NOTICE.txt
 	
 %dir %{_firmwarepath}/qcom
 	
-%{_firmwarepath}/qcom/*
-	
 %{_firmwarepath}/a300_p*
+	
+%{_firmwarepath}/qcom/*.fw*
+	
+%{_firmwarepath}/qcom/*.bin*
+	
+%{_firmwarepath}/qcom/*.m*
+	
+%{_firmwarepath}/qcom/apq*/
+	
+%{_firmwarepath}/qcom/kaanapali/
+	
+%{_firmwarepath}/qcom/qcm*/
+	
+%{_firmwarepath}/qcom/qcs*/
+	
+%{_firmwarepath}/qcom/qrb*/
+	
+%{_firmwarepath}/qcom/sa*/
+	
+%{_firmwarepath}/qcom/sc*/
+	
+%{_firmwarepath}/qcom/sdm*/
+	
+%{_firmwarepath}/qcom/sm*/
+	
+%{_firmwarepath}/qcom/venus-*/
+	
+%{_firmwarepath}/qcom/vpu*/
+	
+%{_firmwarepath}/qcom/x1*/
 	
  
 	
@@ -1021,6 +1412,8 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 	
 %{_firmwarepath}/intel/fw_sst*
 	
+%{_firmwarepath}/intel/IntcSST2.bin*
+	
  
 	
 # Random other hardware
@@ -1050,10 +1443,3 @@ sed -e 's/^/%%dir /' linux-firmware.dirs >> linux-firmware.files
 %{_firmwarepath}/tdmb*
 	
 %{_firmwarepath}/v4l-cx2*
-	
- 
-	
-%changelog
-* Mon May 22 2023 Package Maintainer <maintainer@example.com> - 20250522.1.1-1
-- Update to the latest upstream firmware
-- Fix nvidia firmware packaging
