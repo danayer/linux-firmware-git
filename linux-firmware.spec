@@ -10,7 +10,7 @@
 	
 Name:		linux-firmware
 	
-Version:    20260328.1.2
+Version:    20260329.1.1
 	
 Release:	1%{?dist}
 	
